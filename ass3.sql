@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Nov 29, 2022 at 10:40 AM
+-- Generation Time: Dec 19, 2022 at 06:40 PM
 -- Server version: 5.7.36
 -- PHP Version: 7.4.26
 
@@ -24,6 +24,29 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `department`
+--
+
+DROP TABLE IF EXISTS `department`;
+CREATE TABLE IF NOT EXISTS `department` (
+  `d_id` int(10) NOT NULL AUTO_INCREMENT,
+  `d_name` varchar(20) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`d_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `department`
+--
+
+INSERT INTO `department` (`d_id`, `d_name`) VALUES
+(1, 'Physics'),
+(2, 'Chemistry'),
+(3, 'Math'),
+(4, 'Computer Science');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migrations`
 --
 
@@ -33,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `migrations`
@@ -41,7 +64,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (1, '2019_12_14_000001_create_personal_access_tokens_table', 1),
-(2, '2022_11_26_152900_create_students_table', 1);
+(2, '2022_11_26_152900_create_students_table', 1),
+(3, '2022_12_18_134500_departmant_table', 2),
+(4, '2022_12_18_135332_student_table', 3);
 
 -- --------------------------------------------------------
 
@@ -76,24 +101,36 @@ CREATE TABLE IF NOT EXISTS `students` (
   `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `dob` date NOT NULL,
   `roll_no` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `depatment` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `d_id` int(11) NOT NULL,
   `semester` int(11) NOT NULL,
   `gender` enum('M','F','O') COLLATE utf8_unicode_ci NOT NULL,
+  `Address` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `dob` date NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+  PRIMARY KEY (`id`),
+  KEY `department_foreign` (`d_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `name`, `email`, `dob`, `roll_no`, `depatment`, `semester`, `gender`, `password`, `created_at`, `updated_at`) VALUES
-(5, 'biraj', 'b@b', '2022-11-27', '1', '1', 1, 'M', '123', '2022-11-27 08:55:37', '2022-11-27 08:55:37'),
-(6, 'md', 'md@md', '2022-11-28', '2', '1', 1, 'M', '$2y$10$dnYM/lpv8QGefXkE23eSLuWdDBuYwCszYVYJpVMMZ9J2ojKnONFyG', '2022-11-27 14:13:25', '2022-11-27 14:13:25');
+INSERT INTO `students` (`id`, `name`, `email`, `roll_no`, `d_id`, `semester`, `gender`, `Address`, `password`, `dob`, `created_at`, `updated_at`) VALUES
+(1, 'Biraj Khound', 'birajkhound@bk', '4', 4, 3, 'M', 'Joypur', '$2y$10$5WWi/6Ifzw.tyobjupqL9uaOnzO1pd4EmX7UZgPswySnVsjEKe4eG', '2022-12-19', '2022-12-18 08:46:05', '2022-12-19 12:32:02'),
+(3, 'Madhurya Dutta', 'md@md', '1', 4, 2, 'M', 'Lakhimpur', '$2y$10$HOsmICaGYWxfpaQl9YYrMOYBLyrVkmRHqO9olwGGu5ouMaphoNHcS', '2022-12-19', '2022-12-19 12:35:46', '2022-12-19 12:53:35');
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `students`
+--
+ALTER TABLE `students`
+  ADD CONSTRAINT `department_foreign` FOREIGN KEY (`d_id`) REFERENCES `department` (`d_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
