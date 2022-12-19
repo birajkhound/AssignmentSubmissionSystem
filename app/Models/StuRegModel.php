@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\department;
 class StuRegModel extends Model
 {
     use HasFactory;  
@@ -15,10 +15,15 @@ class StuRegModel extends Model
     	'name',	
         'email',
         'roll_no',	
-        'depatment',
+        'd_id',
         'semester',
         'gender',
+        'address',
         'password',
-       'dob'
+        'dob'
     ];
+
+    public function getDName(){
+        return $this->belongsTo(department::class);
+    }
 }
