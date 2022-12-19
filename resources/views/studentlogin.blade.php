@@ -9,11 +9,11 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 	<!-- bootstrap4 -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.slim.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 	<title>Log_in_Page</title>
-	</head>
+</head>
 
 <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
 <link rel="stylesheet" href="{{asset('asset/css/studentlogin.css')}}">
@@ -22,37 +22,37 @@
 
 	<div class="alert alert-success alert-dismissible">
 		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-			@if(session('mail'))
-			<!-- <div class="alert alert-success alert-dismissible">
+		@if(session('mail'))
+		<!-- <div class="alert alert-success alert-dismissible">
 		<button type="button" class="btn-close" data-bs-dismiss="alert"></button> -->
-			{{session('mail')}}
-			@endif
-			@if(session('pass'))
-			{{session('pass')}}
-<!-- </div></div> -->
-			@endif
-			@if(session('status'))
-			<!-- <div class="alert alert-success alert-dismissible">
+		{{session('mail')}}
+		@endif
+		@if(session('pass'))
+		{{session('pass')}}
+		<!-- </div></div> -->
+		@endif
+		@if(session('status'))
+		<!-- <div class="alert alert-success alert-dismissible">
 		<button type="button" class="btn-close" data-bs-dismiss="alert"></button> -->
-			{{session('status')}}
-			@elseif(!session('status'))
-			@error('name')
-			{{$message}}
-			@enderror
-			@error('email')
-			{{$message}}
-			@enderror
-			@error('rollno')
-			{{$message}}
-			@enderror
-			@error('password')
-			{{$message}}
-			@enderror
-			@error('confirmpassword')
-			{{$message}}
-			@enderror
-			@endif
-		</div>
+		{{session('status')}}
+		@elseif(!session('status'))
+		@error('name')
+		{{$message}}
+		@enderror
+		@error('email')
+		{{$message}}
+		@enderror
+		@error('rollno')
+		{{$message}}
+		@enderror
+		@error('password')
+		{{$message}}
+		@enderror
+		@error('confirmpassword')
+		{{$message}}
+		@enderror
+		@endif
+	</div>
 	</div>
 
 	<div id="formWrapper">
@@ -65,10 +65,6 @@
 						<img src="{{asset('asset/img/logo.jpg')}}" alt="Log-In Here" width="100" height="100">
 					</div>
 				</center>
-
-
-
-
 				<div class="form-item">
 					<p class="formLabel">Email</p>
 					<input type="email" name="Email" id="email" class="form-style" autocomplete="off" value="{{old('Email')}}" />
@@ -82,7 +78,7 @@
 					<span class="text-danger">@error('Password')
 						{{$message}}
 						@enderror</span>
-					<p><a href="#"><small>Forgot Password ?</small></a></p>
+					<!-- <p><a href="#"><small>Forgot Password ?</small></a></p> -->
 				</div>
 				<div class="form-item">
 					<p class="pull-left" data-toggle="modal" data-target=".bd-example-modal-lg"><a href="#"><small>Register</small></a></p>
@@ -99,8 +95,8 @@
 			<div class="modal-content bg-light text-dark">
 				<div class="container-fluid">
 					<center>
-						<div class="mb-3">
-							<h3 class="blurb" style="color:#58bff6">Lets Creating An Account </h3>
+						<div class="mb-3 mt-3">
+							<h3 class="blurb" style="color:#58bff6">Lets Create An Account </h3>
 						</div>
 					</center>
 
@@ -116,6 +112,10 @@
 							<div class="row mt-2">
 								<label for="signup-email" class="col-sm-4">Email Address</label>
 								<input id="signup-email" class="col-sm-4 ml-5" type="email" name="email" autocomplete="off" value="{{old('email')}}" />
+							</div>
+							<div class="row mt-2">
+								<label for="address" class="col-sm-4">Address</label>
+								<textarea id="address" class="col-sm-4 ml-5" type="text" name="address"></textarea>
 							</div>
 
 							<div class="row mt-2">
@@ -133,10 +133,9 @@
 							<div class="row mt-2">
 								<label for="Select department" class="col-sm-4">Select Department</label>
 								<select class="col-sm-4 ml-5" name="department">
-									<option value="1" selected>PHYSICS</option>
-									<option value="2">CHEMISTRY</option>
-									<option value="3">MATH</option>
-
+									@foreach($department as $c)
+									<option value="{{$c->d_id}}">{{$c->d_name}}</option>
+									@endforeach
 								</select>
 							</div>
 							<div class="row mt-2">
@@ -148,13 +147,16 @@
 								<input id="dob" type="date" name="dob" class="col-sm-4 ml-5" value="{{old('dob')}}" />
 							</div>
 							<div class="row mt-2">
-								<label for="Select department" class="col-sm-4">Select Gender</label>
-								<select class="col-sm-4 ml-5" name="gender">
-									<option value="M" selected>MALE</option>
-									<option value="F">FEMALE</option>
-									<option value="O">OTHERS</option>
+								<label for="Select department" class="col-sm-4">Gender</label>
+								<div class="col-sm-6 ml-5">
+									<input type="radio" id="male" name="gender" value="M">
+									 <label for="male">MALE </label>
+									<input type="radio" id="female" name="gender" value="F">
+									 <label for="female">FEMALE </label>
+									<input type="radio" id="others" name="gender" value="O">
+									 <label for="others">OTHERS</label>
+								</div>
 
-								</select>
 							</div>
 							<div class="row mt-2">
 								<label for="signup-pw" class="col-sm-4">Password</label>
