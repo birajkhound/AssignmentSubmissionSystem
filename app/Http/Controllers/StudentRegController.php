@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\models\StuRegModel;
+use App\models\department;
 use Illuminate\Support\Facades\Hash;
 use Session;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 use Illuminate\Http\Request;
 
@@ -13,7 +15,8 @@ class StudentRegController extends Controller
 {
     public function index()
     {
-        return view('studentlogin');
+        $data['department']=DB::table('department')->orderBy('d_name','asc')->get();
+        return view('studentlogin',$data);
     }
     public function studentreg(Request $request)
     {
@@ -31,9 +34,10 @@ class StudentRegController extends Controller
         $students->name = $request->input('name');
         $students->email = $request->input('email');
         $students->roll_no = $request->input('rollno');
-        $students->depatment = $request->input('department');
+        $students->d_id = $request->input('department');
         $students->semester = $request->input('class');
         $students->gender = $request->input('gender');
+        $students->Address = $request->input('address');
         $students->password = Hash::make($request->input('password'));
         $students->dob = $request->input('dob');
         $students->save();
@@ -62,11 +66,14 @@ class StudentRegController extends Controller
     }
     public function dashboard(){
         {
-            $data = array();
+           // $data = array();
+            
             if (Session::has('loginId')) {
                 $data = StuRegModel::where('id', "=", Session::get('loginId'))->first();
-            }
-            return view('dashboard', compact('data'));
+            $data1 = department::where('d_id', "=",$data->d_id)->first();
+            return view('dashboard', compact('data','data1')); }
+
+           
         }
     }
     public function logout(){
